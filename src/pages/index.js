@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
-import Footer from "../../components/footer";
-import Navbar from "../../components/navbar";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,9 +22,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar></Navbar>
+  
 
-      <div className="container mx-auto">
+      <div className="container my-10 ">
         <div className="w-full">
           <img
             src="/img_1.jpg"
@@ -52,7 +51,7 @@ export default function Home() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
                     className="w-6 h-6"
@@ -76,7 +75,7 @@ export default function Home() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
                     className="w-6 h-6"
@@ -102,7 +101,7 @@ export default function Home() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
                     className="w-6 h-6"
@@ -127,7 +126,7 @@ export default function Home() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
                     className="w-6 h-6"
@@ -151,7 +150,7 @@ export default function Home() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
                     className="w-6 h-6"
@@ -175,7 +174,7 @@ export default function Home() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
                     className="w-6 h-6"
@@ -196,8 +195,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <Footer></Footer>
     </>
   );
 }
