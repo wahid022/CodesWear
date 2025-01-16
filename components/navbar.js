@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaCartArrowDown } from "react-icons/fa";
-import { IoCloseCircle } from "react-icons/io5";
+import Sidebar from "./sidebar";
 
 const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false); // Track the cart visibility state
-  const ref = useRef();
+  // const ref = useRef();
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen); // Toggle the cart open/close state or changing the cart value if false->true and vice-versa
   };
 
   // Ensure body overflow is hidden when cart is open
-  // Jab bhi iscartOpen change honga tab useEffect call honga 
+  // Jab bhi iscartOpen change honga tab useEffect call honga
 
   useEffect(() => {
     if (isCartOpen) {
@@ -22,8 +22,6 @@ const Navbar = () => {
       document.body.style.overflow = ""; // Enable scrolling when cart is closed
     }
   }, [isCartOpen]);
-
-
 
   return (
     <div>
@@ -53,7 +51,6 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Cart Icon (visible only on all devices) */}
         <div
           onClick={toggleCart}
           className="cart absolute right-0 top-5 mx-5 cursor-pointer md:block"
@@ -62,27 +59,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Sidebar Cart (visible for all devices) */}
-      {/* isCartOpen ? "translate-x-0" : "translate-x-full" will check for transition of sidebar */}
-      <div
-        ref={ref}
-        className={`sideCart fixed top-0 right-0 bg-white w-80 h-full shadow-2xl py-10 px-5 transform transition-transform z-50 ${
-          isCartOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <h2 className="font-bold text-xl border-b pb-4">Shopping Cart</h2>
-        <span
-          onClick={toggleCart}
-          className="absolute top-5 right-5 cursor-pointer text-3xl text-pink-500"
-        >
-          <IoCloseCircle />
-        </span>
-        <ol>
-          <li>
-            <span>Tshirt-Wear the code</span>
-          </li>
-        </ol>
-      </div>
+      {/* Here Sidebar component is called with required props  */}
+
+      <Sidebar toggleCart={toggleCart} isCartOpen={isCartOpen}></Sidebar>
     </div>
   );
 };
