@@ -67,6 +67,12 @@ const Sidebar = ({toggleCart,isCartOpen}) => {
             Checkout
           </button>
         </div>
+
+        <div className="mt-5">
+          <button className="w-full bg-pink-500 text-white py-2 rounded-md font-semibold hover:bg-pink-600">
+            Clear Cart
+          </button>
+        </div>
       </div>
   )
 }
