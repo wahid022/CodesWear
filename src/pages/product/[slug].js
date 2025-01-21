@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const SlugPage = () => {
+
+//Here addTocart is coming from <Component cart={cart},....> from app.js so no need to handle props for [slug].js
+const SlugPage = ({addTocart}) => {
   const router = useRouter();
   console.log(router.query);
   const { slug } = router.query;
 
   const [pin, setPin] = useState();
-  const [delivery,setDelivery]=useState(null);
+  const [delivery, setDelivery] = useState(null);
 
   const checkServicibility = async () => {
     //fetching the api that we have made
@@ -21,10 +23,9 @@ const SlugPage = () => {
       setDelivery(true);
     } else {
       console.log("Sorry Pincode Doesnt Matches..");
-      setDelivery(false)
+      setDelivery(false);
     }
   };
-
 
   //Defining onchange for pincode input box..
   const SetPinChange = (e) => {
@@ -47,7 +48,7 @@ const SlugPage = () => {
                 CODESWEAR
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-              Wear The Code (XL/Blue)
+                Wear The Code (XL/Blue)
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -189,9 +190,9 @@ const SlugPage = () => {
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                ₹499
+                  ₹499
                 </span>
-                <button className="flex ml-8 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                <button onClick={()=>{addTocart(slug,1,499,'Wear-The-Code(XL, Red)','XL','Red')}} className="flex ml-8 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
                   Add To Cart
                 </button>
                 <button className="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
@@ -223,12 +224,16 @@ const SlugPage = () => {
                   Check
                 </button>
               </div>
-              {(!delivery && delivery!=null) && <div className="text-red-700 text-sm mt-3">
-                Sorry! We Do Not Deliver To This Pincode Yet
-              </div>}
-              {(delivery && delivery!=null) && <div className="text-green-700 text-sm mt-3">
-                Yay! This Pincode Is Serviceable
-              </div>}
+              {!delivery && delivery != null && (
+                <div className="text-red-700 text-sm mt-3">
+                  Sorry! We Do Not Deliver To This Pincode Yet
+                </div>
+              )}
+              {delivery && delivery != null && (
+                <div className="text-green-700 text-sm mt-3">
+                  Yay! This Pincode Is Serviceable
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -4,9 +4,11 @@ import Link from "next/link";
 import { FaCartArrowDown } from "react-icons/fa";
 import Sidebar from "./sidebar";
 
-const Navbar = () => {
+const Navbar = ({cart, addTocart, removeFromCart, clearCart, subTotal}) => {
   const [isCartOpen, setIsCartOpen] = useState(false); // Track the cart visibility state
   // const ref = useRef();
+
+  
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen); // Toggle the cart open/close state or changing the cart value if false->true and vice-versa
@@ -61,7 +63,7 @@ const Navbar = () => {
 
       {/* Here Sidebar component is called with required props  */}
 
-      <Sidebar toggleCart={toggleCart} isCartOpen={isCartOpen}></Sidebar>
+      <Sidebar addTocart={addTocart} removeFromCart={removeFromCart} clearCart={clearCart}  cart={cart} toggleCart={toggleCart} isCartOpen={isCartOpen}></Sidebar>
     </div>
   );
 };
