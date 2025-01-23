@@ -1,11 +1,21 @@
 import React, { useRef } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import Link from "next/link";
+import { FaShoppingCart, FaTrash } from "react-icons/fa";
 
-const Sidebar = ({ cart ,toggleCart, isCartOpen, clearCart, addTocart, removeFromCart }) => {
+const Sidebar = ({
+  cart,
+  toggleCart,
+  isCartOpen,
+  clearCart,
+  addTocart,
+  removeFromCart,
+  subTotal
+}) => {
   const ref = useRef();
 
-  console.log('objectKeys Array >>>',Object.keys(cart))
+  console.log("objectKeys Array >>>", Object.keys(cart));
   console.log("cartItems", cart);
   return (
     // {/* Sidebar Cart (visible for all devices) */}
@@ -39,27 +49,58 @@ const Sidebar = ({ cart ,toggleCart, isCartOpen, clearCart, addTocart, removeFro
                 <p className="text-gray-400">{cart[k].price}</p>
               </div>
               <div className="flex items-center space-x-2">
-                <FaMinus onClick={()=>removeFromCart(k,1,cart[k].price,cart[k].name,cart[k].size,cart[k].variant)} className="cursor-pointer text-pink-500" />
+                <FaMinus
+                  onClick={() =>
+                    removeFromCart(
+                      k,
+                      1,
+                      cart[k].price,
+                      cart[k].name,
+                      cart[k].size,
+                      cart[k].variant
+                    )
+                  }
+                  className="cursor-pointer text-pink-500"
+                />
                 <span className="font-bold">{cart[k].qty}</span>
-                <FaPlus onClick={()=>addTocart(k,1,cart[k].price,cart[k].name,cart[k].size,cart[k].variant)} className="cursor-pointer text-pink-500" />
+                <FaPlus
+                  onClick={() =>
+                    addTocart(
+                      k,
+                      1,
+                      cart[k].price,
+                      cart[k].name,
+                      cart[k].size,
+                      cart[k].variant
+                    )
+                  }
+                  className="cursor-pointer text-pink-500"
+                />
               </div>
             </li>
           );
         })}
       </ol>
+      <p className="mt-4 text-sm font-semibold text-gray-800">
+            Total Amount: <span className="text-pink-500">₹{subTotal}</span>
+          </p>
 
       <div className="mt-5">
-        <button className="w-full bg-pink-500 text-white py-2 rounded-md font-semibold hover:bg-pink-600">
-          Checkout
-        </button>
+        <Link href={"/checkout"}>
+          <button className="w-full bg-pink-500 text-white py-2 rounded-md font-semibold hover:bg-pink-600 flex items-center justify-center space-x-2">
+            <FaShoppingCart className="text-white text-lg" />
+            <span>Checkout</span>
+          </button>
+        </Link>
       </div>
 
       <div className="mt-5">
         <button
           onClick={clearCart}
-          className="w-full bg-pink-500 text-white py-2 rounded-md font-semibold hover:bg-pink-600"
+          className="w-full bg-pink-500 text-white py-2 rounded-md font-semibold hover:bg-pink-600 flex items-center justify-center space-x-2"
         >
-          Clear Cart
+          <FaTrash className="text-white text-lg" />
+          <span>Clear Cart</span>
         </button>
       </div>
     </div>

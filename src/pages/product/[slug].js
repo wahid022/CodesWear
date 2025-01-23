@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 
 //Here addTocart is coming from <Component cart={cart},....> from app.js so no need to handle props for [slug].js
-const SlugPage = ({addTocart}) => {
+const SlugPage = ({addTocart,toggleCart}) => {
   const router = useRouter();
   console.log(router.query);
   const { slug } = router.query;
@@ -192,7 +192,7 @@ const SlugPage = ({addTocart}) => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   ₹499
                 </span>
-                <button onClick={()=>{addTocart(slug,1,499,'Wear-The-Code(XL, Red)','XL','Red')}} className="flex ml-8 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                <button onClick={()=>{addTocart(slug,1,499,'Wear-The-Code(XL, Red)','XL','Red');toggleCart();}} className="flex ml-8 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
                   Add To Cart
                 </button>
                 <button className="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">

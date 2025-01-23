@@ -4,15 +4,21 @@ import Link from "next/link";
 import { FaCartArrowDown } from "react-icons/fa";
 import Sidebar from "./sidebar";
 
-const Navbar = ({cart, addTocart, removeFromCart, clearCart, subTotal}) => {
-  const [isCartOpen, setIsCartOpen] = useState(false); // Track the cart visibility state
-  // const ref = useRef();
+const Navbar = ({
+  cart,
+  addTocart,
+  removeFromCart,
+  clearCart,
+  subTotal,
+  isCartOpen,
+  toggleCart,
+}) => {
+  // const [isCartOpen, setIsCartOpen] = useState(false); // Track the cart visibility state
+  // // const ref = useRef();
 
-  
-
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen); // Toggle the cart open/close state or changing the cart value if false->true and vice-versa
-  };
+  // const toggleCart = () => {
+  //   setIsCartOpen(!isCartOpen); // Toggle the cart open/close state or changing the cart value if false->true and vice-versa
+  // };
 
   // Ensure body overflow is hidden when cart is open
   // Jab bhi iscartOpen change honga tab useEffect call honga
@@ -26,7 +32,7 @@ const Navbar = ({cart, addTocart, removeFromCart, clearCart, subTotal}) => {
   }, [isCartOpen]);
 
   return (
-    <div>
+    <div className="sticky top-0 bg-white z-10">
       {/* Navbar */}
       <div className="flex flex-col md:flex-row items-center py-1 mb-1 shadow-xl relative">
         <div className="logo">
@@ -63,7 +69,15 @@ const Navbar = ({cart, addTocart, removeFromCart, clearCart, subTotal}) => {
 
       {/* Here Sidebar component is called with required props  */}
 
-      <Sidebar addTocart={addTocart} removeFromCart={removeFromCart} clearCart={clearCart}  cart={cart} toggleCart={toggleCart} isCartOpen={isCartOpen}></Sidebar>
+      <Sidebar
+        addTocart={addTocart}
+        removeFromCart={removeFromCart}
+        clearCart={clearCart}
+        cart={cart}
+        toggleCart={toggleCart}
+        subTotal={subTotal}
+        isCartOpen={isCartOpen}
+      ></Sidebar>
     </div>
   );
 };
