@@ -26,7 +26,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 placeholder="Enter your email"
               />
             </div>
@@ -41,7 +41,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 type="text"
                 id="name"
                 name="name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 placeholder="Enter your name"
               />
             </div>
@@ -55,7 +55,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
               <textarea
                 id="address"
                 name="address"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 rows="3"
                 placeholder="Enter your address"
               ></textarea>
@@ -71,7 +71,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 type="text"
                 id="city"
                 name="city"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 placeholder="Enter your city"
               />
             </div>
@@ -86,7 +86,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 type="text"
                 id="state"
                 name="state"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 placeholder="Enter your state"
               />
             </div>
@@ -101,7 +101,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 type="text"
                 id="pincode"
                 name="pincode"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 placeholder="Enter your pincode"
               />
             </div>
@@ -116,7 +116,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 type="text"
                 id="phone"
                 name="phone"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 placeholder="Enter your phone number"
               />
             </div>

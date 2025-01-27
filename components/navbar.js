@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaCartArrowDown } from "react-icons/fa";
+import { MdAccountCircle } from "react-icons/md";
 import Sidebar from "./sidebar";
 
 const Navbar = ({
@@ -59,11 +60,15 @@ const Navbar = ({
           </ul>
         </div>
 
-        <div
-          onClick={toggleCart}
-          className="cart absolute right-0 top-5 mx-5 cursor-pointer md:block"
-        >
-          <FaCartArrowDown className="text-xl md:text-2xl text-pink-500 hover:text-pink-700" />
+        <div className="cart absolute right-0 top-5 mx-5 cursor-pointer flex items-center space-x-4 text-gray-600">
+          {/* Account Icon */}
+          <Link href={'/login'}><MdAccountCircle
+            
+            className="text-2xl md:text-3xl text-pink-500 hover:text-pink-700 transition-colors duration-200"
+          /> </Link>
+
+          {/* Cart Icon */}
+          <FaCartArrowDown onClick={toggleCart} className="text-2xl md:text-3xl text-pink-500 hover:text-pink-700 transition-colors duration-200" />
         </div>
       </div>
 
