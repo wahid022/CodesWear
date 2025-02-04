@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
 
+
 export default function App({ Component, pageProps }) {
   const [cart, setcart] = useState({}); // Stored all the Previous Data of the cart
   const [subTotal, setSubTotal] = useState(0); // to Calculate the total Amount of the cart

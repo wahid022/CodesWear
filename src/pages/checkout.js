@@ -1,6 +1,7 @@
 import React from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { FaCcVisa, FaCcMastercard, FaPaypal } from "react-icons/fa";
+import { FaFreeCodeCamp } from "react-icons/fa";
 
 const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
   return (
