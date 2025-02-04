@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-
+import mongoose from "mongoose";
+import Product from "../../../models/Product";
 
 //Here addTocart is coming from <Component cart={cart},....> from app.js so no need to handle props for [slug].js
-const SlugPage = ({addTocart,toggleCart}) => {
+const SlugPage = ({addTocart,toggleCart,product}) => {
   const router = useRouter();
   console.log(router.query);
   const { slug } = router.query;
@@ -45,10 +46,10 @@ const SlugPage = ({addTocart,toggleCart}) => {
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                CODESWEAR
+                {product.slug}
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                Wear The Code (XL/Blue)
+                {product.title}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -149,12 +150,7 @@ const SlugPage = ({addTocart,toggleCart}) => {
                 </span>
               </div>
               <p className="leading-relaxed">
-                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-                juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-                seitan poutine tumeric. Gastropub blue bottle austin listicle
-                pour-over, neutra jean shorts keytar banjo tattooed umami
-                cardigan.
+                {product.desc}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
@@ -190,7 +186,7 @@ const SlugPage = ({addTocart,toggleCart}) => {
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  ₹499
+                  ₹{product.price}
                 </span>
                 <button onClick={()=>{addTocart(slug,1,499,'Wear-The-Code(XL, Red)','XL','Red');toggleCart();}} className="flex ml-8 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
                   Add To Cart
@@ -241,5 +237,27 @@ const SlugPage = ({addTocart,toggleCart}) => {
     </>
   );
 };
+
+
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+
+  const { slug } = context.params;  // Get the slug from the URL params
+
+  // Find the product by slug
+  let product = await Product.findOne({ slug });
+
+  if (!product) {
+    return {
+      notFound: true,  // Return 404 if the product is not found
+    };
+  }
+
+  return {
+    props: { product: JSON.parse(JSON.stringify(product)) },  // Pass the product as a prop
+  };
+}
 
 export default SlugPage;
