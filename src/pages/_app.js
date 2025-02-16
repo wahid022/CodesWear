@@ -3,7 +3,6 @@ import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
 
-
 export default function App({ Component, pageProps }) {
   const [cart, setcart] = useState({}); // Stored all the Previous Data of the cart
   const [subTotal, setSubTotal] = useState(0); // to Calculate the total Amount of the cart
@@ -11,6 +10,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     try {
+      // Agr local storage mein item raha tab hi setcart update honga matlb cart ka items ..
       if (localStorage.getItem("cart")) {
         setcart(JSON.parse(localStorage.getItem("cart")));
       }
@@ -22,31 +22,34 @@ export default function App({ Component, pageProps }) {
       console.error(error);
       localStorage.clear();
     }
-    
   }, []);
 
-
-
-  // To open or close the sidebar 
+  // To open or close the sidebar
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen); // Toggle the cart open/close state or changing the cart value if false->true and vice-versa
   };
 
-
   // Function to Add a new Item to the Cart.. or When the user clicks on + button to increase the quantity of the product
   const addTocart = (itemCode, qty, price, name, size, variant) => {
-    console.log('Add to Cart is called ...')
-    let newCart = cart; // Copied the coming Data stored in cart State..
+    console.log("Add to Cart is called ...");
 
-    // coming itemCode present already in the cart state or not
-    if (itemCode in cart) {
-      newCart[itemCode].qty = cart[itemCode].qty + qty; //newCart[itemCode] to identify the particular item and then perform the operation accordingly..
-    } else {
-      newCart[itemCode] = { qty: 1, price, name, size, variant };
+    //Agar sab parameters hai tab hi cart mein add karo warna nahi ...
+    if (itemCode && qty && price != "" && name != "" && size != "" && variant != "") 
+    {
+      let newCart = cart; // Copied the coming Data stored in cart State..
+      // coming itemCode present already in the cart state or not
+      if (itemCode in cart) {
+        newCart[itemCode].qty = cart[itemCode].qty + qty; //newCart[itemCode] to identify the particular item and then perform the operation accordingly..
+      } else {
+        newCart[itemCode] = { qty: 1, price, name, size, variant }; // Here if new product is there then make the quantity 1 of that particular product and add it to the cart ..
+      }
+
+      setcart(newCart); // set the state variable named cart
+      saveCart(newCart); // save it to the local storage as well
     }
-
-    setcart(newCart);
-    saveCart(newCart);
+    else{
+      console.log('Something is coming as empty either size,color or variant fix it out ...')
+    }
   };
 
   const saveCart = (myCart) => {
@@ -59,7 +62,6 @@ export default function App({ Component, pageProps }) {
 
     setSubTotal(newTotal);
     localStorage.setItem("subTotal", newTotal.toString()); // Save subtotal to localStorage
-    
   };
 
   //  To Clear the Cart ...
@@ -73,7 +75,7 @@ export default function App({ Component, pageProps }) {
 
   // Function to Remove an Item from the Cart ...or When the user clicks on - button to decrease the quantity of the product..
   const removeFromCart = (itemCode, qty, price, name, size, variant) => {
-    let newCart=JSON.parse(JSON.stringify(cart));   // Deep Copy 
+    let newCart = JSON.parse(JSON.stringify(cart)); // Deep Copy
     if (itemCode in newCart) {
       if (newCart[itemCode].qty <= 0) {
         delete newCart[itemCode];

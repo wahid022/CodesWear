@@ -5,7 +5,7 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     let updatedProducts=[];
     for (let i = 0; i < req.body.length; i++) {
-        let p=await Product.findByIdAndUpdate(req.body[i]._id,req.body[i]);
+        let p=await Product.findByIdAndUpdate(req.body[i]._id,req.body[i]); //findByIdAndUpdate(finding paramter,Object you want to update)
         updatedProducts.push(p)
     }
     res.status(200).json({ success:updatedProducts });
@@ -17,4 +17,4 @@ const handler = async (req, res) => {
   
 };
 
-export default connectDb(handler);
+export default connectDb(handler); // this is done to update the changes to db in the database ..

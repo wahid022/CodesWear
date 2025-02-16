@@ -45,7 +45,7 @@ const Sidebar = ({
           return (
             <li key={k} className="flex justify-between items-center mb-4">
               <div>
-                <span className="font-medium">{cart[k].name}</span>
+                <span className="font-medium">{cart[k].name+'-'+ cart[k].variant+'('+cart[k].size+')'}</span>
                 <p className="text-gray-400">{cart[k].price}</p>
               </div>
               <div className="flex items-center space-x-2">

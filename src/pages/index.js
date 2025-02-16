@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  // This is the Home Page ...
   return (
     <>
       <Head>

@@ -38,7 +38,7 @@ const Navbar = ({
       <div className="flex flex-col md:flex-row items-center py-1 mb-1 shadow-xl relative">
         <div className="logo">
           <Link href={"/"}>
-            <Image src="/logo.jpg" alt="Logo" height={60} width={70} />
+            <Image src="/logo1.jpg" alt="Logo" height={60} width={70} />
           </Link>
         </div>
 
