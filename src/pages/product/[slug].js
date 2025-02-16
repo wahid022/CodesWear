@@ -57,8 +57,8 @@ const SlugPage = ({ addTocart, toggleCart, product, variants }) => {
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img
             alt="ecommerce"
-            className="lg:w-1/2 w-full px-24 lg:h-auto object-cover object-top rounded"
-            src="https://m.media-amazon.com/images/I/619w3t6+m6L._SX679_.jpg"
+            className="lg:w-1/3 w-full px-24 lg:h-auto object-cover object-top rounded"
+            src={product.img}
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
@@ -165,6 +165,7 @@ export async function getServerSideProps(context) {
   let product = await Product.findOne({ slug });
   let variants = await Product.find({ title: product.title });
   let colorSizeSlug = {};
+
 
   variants.forEach((item) => {
     if (!colorSizeSlug[item.color]) {
