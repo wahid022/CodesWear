@@ -11,6 +11,8 @@ const Tshirts = ({ products }) => {
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap justify-around">
             {/* yaha Objecty */}
+            {Object.keys(products).length === 0 && (<p>Sorry No Tshirts in Stock Right Now! Stay Tuned ...</p>)}
+
             {Object.keys(products).map((item) => (
               <div
                 key={products[item]._id}
@@ -90,7 +92,7 @@ export async function getServerSideProps(context) {
   }
 
   // Here we are finding data from the database, not from the API
-  let products = await Product.find(); // this is the array form
+  let products = await Product.find({category:'clothing'}); // this is the array form
 
   let tshirts = {};
   for (let item of products) {

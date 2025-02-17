@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import mongoose from "mongoose";
 import Product from "../../../models/Product";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
-const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
+const SlugPage = ({ buyNow, addTocart, toggleCart, product, variants }) => {
   const router = useRouter();
   const { slug } = router.query;
   console.log(product, variants);
@@ -24,8 +25,6 @@ const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
     black: "bg-black border-gray-500",
   };
 
-  
-
   const refreshVariant = (newColor, newSize) => {
     if (!newSize) return;
     if (variants[newColor] && variants[newColor][newSize]) {
@@ -35,16 +34,49 @@ const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
       console.warn("Variant combination not found:", newColor, newSize);
     }
   };
-  
 
   const checkServicibility = async () => {
     try {
       const res = await fetch("/api/pincode");
       const pinData = await res.json();
-      setDelivery(pinData.includes(parseInt(pin)));
+      if (pinData.includes(parseInt(pin))) {
+        setDelivery(pinData.includes(parseInt(pin)));
+        setDelivery(true);
+
+        toast.success('🦄 Success ! This Pincode is Serviceable', {
+          position: "top-right",
+          autoClose: 2996,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
+      }
+
+      else
+      {
+        setDelivery(false);
+
+        toast.error('🦄 Sorry ! This Pincode is Not Serviceable', {
+          position: "top-right",
+          autoClose: 2996,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
+      }
     } catch (error) {
       console.error("Error checking pincode:", error);
       setDelivery(false);
+
+
     }
   };
 
@@ -55,6 +87,19 @@ const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
+      <ToastContainer
+        position="top-right"
+        autoClose={2996}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <div className="container px-5 py-16 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img
@@ -80,9 +125,9 @@ const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
                       setColor(col);
                       refreshVariant(col, size);
                     }}
-                    className={`border-2 ml-1 rounded-full w-6 h-6 focus:outline-none ${colorClasses[col]} ${
-                      col === color ? "border-black" : "border-gray-300"
-                    }`}
+                    className={`border-2 ml-1 rounded-full w-6 h-6 focus:outline-none ${
+                      colorClasses[col]
+                    } ${col === color ? "border-black" : "border-gray-300"}`}
                   ></button>
                 ))}
               </div>
@@ -121,7 +166,12 @@ const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
               >
                 Add To Cart
               </button>
-              <button onClick={()=>{buyNow(slug, 1, product.price, product.title, size, color)}} className="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+              <button
+                onClick={() => {
+                  buyNow(slug, 1, product.price, product.title, size, color);
+                }}
+                className="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded"
+              >
                 Buy Now
               </button>
             </div>
@@ -165,9 +215,8 @@ export async function getServerSideProps(context) {
 
   const { slug } = context.params;
   let product = await Product.findOne({ slug });
-  let variants = await Product.find({ title: product.title });
+  let variants = await Product.find({ title: product.title,category:product.category });
   let colorSizeSlug = {};
-
 
   variants.forEach((item) => {
     if (!colorSizeSlug[item.color]) {

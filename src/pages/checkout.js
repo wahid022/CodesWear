@@ -146,7 +146,7 @@ const Checkout = ({ cart, addTocart, removeFromCart, subTotal }) => {
                 >
                   <div>
                     <p className="font-semibold text-gray-800">
-                      {cart[k].name}
+                      {cart[k].name+'-'+ cart[k].variant+'('+cart[k].size+')'}
                     </p>
                     <p className="text-gray-500 text-sm">₹{cart[k].price}</p>
                   </div>
