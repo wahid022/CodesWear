@@ -2,11 +2,13 @@ import "@/styles/globals.css";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
+import Router, { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const [cart, setcart] = useState({}); // Stored all the Previous Data of the cart
   const [subTotal, setSubTotal] = useState(0); // to Calculate the total Amount of the cart
   const [isCartOpen, setIsCartOpen] = useState(false); // Track the cart visibility state
+  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -34,8 +36,14 @@ export default function App({ Component, pageProps }) {
     console.log("Add to Cart is called ...");
 
     //Agar sab parameters hai tab hi cart mein add karo warna nahi ...
-    if (itemCode && qty && price != "" && name != "" && size != "" && variant != "") 
-    {
+    if (
+      itemCode &&
+      qty &&
+      price != "" &&
+      name != "" &&
+      size != "" &&
+      variant != ""
+    ) {
       let newCart = cart; // Copied the coming Data stored in cart State..
       // coming itemCode present already in the cart state or not
       if (itemCode in cart) {
@@ -46,9 +54,31 @@ export default function App({ Component, pageProps }) {
 
       setcart(newCart); // set the state variable named cart
       saveCart(newCart); // save it to the local storage as well
+    } else {
+      console.log(
+        "Something is coming as empty either size,color or variant fix it out ..."
+      );
     }
-    else{
-      console.log('Something is coming as empty either size,color or variant fix it out ...')
+  };
+
+  const buyNow = (itemCode, qty, price, name, size, variant) => {
+    if (
+      itemCode &&
+      qty &&
+      price != "" &&
+      name != "" &&
+      size != "" &&
+      variant != ""
+    ) {
+      let newCart = { itemCode: { qty: 1, price, name, size, variant } };
+      setcart(newCart); // set the state variable named cart
+      saveCart(newCart); // save it to the local storage as well
+      router.push("/checkout");
+    }
+    else {
+      console.log(
+        "Something is coming as empty either size,color or variant fix it out ..."
+      );
     }
   };
 
@@ -103,6 +133,7 @@ export default function App({ Component, pageProps }) {
         isCartOpen={isCartOpen}
         toggleCart={toggleCart}
         addTocart={addTocart}
+        buyNow={buyNow}
         removeFromCart={removeFromCart}
         clearCart={clearCart}
         subTotal={subTotal}

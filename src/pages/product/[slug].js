@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import mongoose from "mongoose";
 import Product from "../../../models/Product";
 
-const SlugPage = ({ addTocart, toggleCart, product, variants }) => {
+const SlugPage = ({ buyNow,addTocart, toggleCart, product, variants }) => {
   const router = useRouter();
   const { slug } = router.query;
   console.log(product, variants);
@@ -23,6 +23,8 @@ const SlugPage = ({ addTocart, toggleCart, product, variants }) => {
     yellow: "bg-yellow-500 border-gray-300",
     black: "bg-black border-gray-500",
   };
+
+  
 
   const refreshVariant = (newColor, newSize) => {
     if (!newSize) return;
@@ -119,7 +121,7 @@ const SlugPage = ({ addTocart, toggleCart, product, variants }) => {
               >
                 Add To Cart
               </button>
-              <button className="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+              <button onClick={()=>{buyNow(slug, 1, product.price, product.title, size, color)}} className="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
                 Buy Now
               </button>
             </div>
