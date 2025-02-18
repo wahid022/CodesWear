@@ -1,19 +1,87 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 const Signup = () => {
+  const [name, setname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [conPassword,setConpassword] = useState("");
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+    if (e.target.name === "name") {
+      setname(e.target.value);
+    } else if (e.target.name === "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    }
+    else if (e.target.name === "cnfpassword") {
+      setConpassword(e.target.value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formBody = { name, email, password };
+
+    const res = await fetch("http://localhost:3000/api/signup", {
+      method: "POST",
+      body: JSON.stringify(formBody),
+      headers: { "Content-Type": "application/json" },
+    });
+    let response = await res.json();
+    console.log(response);
+    setname("");
+    setEmail("");
+    setPassword("");
+    setConpassword("");
+
+
+    toast.success('User Has Been Created Successfully ..', {
+      position: "bottom-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+    console.log("Handle Submit is called ...");
+  };
+
   return (
     <section className="py-8 md:py-16 dark:bg-gray-800">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         {/* Logo */}
+        <ToastContainer
+          position="bottom-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+
+
         <Link
           href="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <Image
             className="mr-3"
-            src="/logo.jpg"
+            src="/logo1.jpg"
             alt="Logo"
             height={80}
             width={80}
@@ -34,7 +102,7 @@ const Signup = () => {
             </p>
 
             {/* Signup Form */}
-            <form className="space-y-6" method="POST" action="/auth/signup">
+            <form onSubmit={handleSubmit} className="space-y-6" method="POST">
               {/* Name Input */}
               <div>
                 <label
@@ -46,6 +114,8 @@ const Signup = () => {
                 <input
                   type="text"
                   name="name"
+                  value={name}
+                  onChange={handleChange}
                   id="name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-pink-600 focus:border-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
                   placeholder="Enter your full name"
@@ -63,6 +133,8 @@ const Signup = () => {
                 </label>
                 <input
                   type="email"
+                  value={email}
+                  onChange={handleChange}
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-pink-600 focus:border-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
@@ -81,6 +153,8 @@ const Signup = () => {
                 </label>
                 <input
                   type="password"
+                  value={password}
+                  onChange={handleChange}
                   name="password"
                   id="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-pink-600 focus:border-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
@@ -100,6 +174,8 @@ const Signup = () => {
                 <input
                   type="password"
                   name="cnfpassword"
+                  value={conPassword}
+                  onChange={handleChange}
                   id="cnfpassword"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-pink-600 focus:border-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
                   placeholder="Re-enter your password"
