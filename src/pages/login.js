@@ -1,19 +1,107 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const router=useRouter();
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+    if (e.target.name === "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formBody = {email, password };
+
+    const res = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      body: JSON.stringify(formBody),
+      headers: { "Content-Type": "application/json" },
+    });
+    let response = await res.json();
+    console.log(response);
+    setEmail("");
+    setPassword("");
+
+
+    //Agar response.success==true hua toh toastify run honga and router.push() se home page mein redirect..
+
+    if(response.success)
+    {
+      toast.success('User Successfully logged in ..', {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+
+        //timeout function jo hai 1 sec baad leke jayenga homepage pe after toastify run ho jaaye ..
+        setTimeout(()=>{
+          router.push('http://localhost:3000');
+        },1000)
+
+    }
+    else{
+      toast.error('Invalid Credentials...', {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
+
+
+    
+    console.log("Handle Submit is called ...");
+  };
   return (
     <section className="py-8 md:py-16 dark:bg-gray-800">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         {/* Logo */}
+
+        <ToastContainer
+          position="bottom-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+
+
         <Link
           href="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <Image
             className="mr-3"
-            src="/logo.jpg"
+            src="/logo1.jpg"
             alt="Logo"
             height={80} // Increased height
             width={80} // Increased width
@@ -33,7 +121,7 @@ const Login = () => {
             </p>
 
             {/* Login Form */}
-            <form className="space-y-6" method="POST" action="/auth/login/">
+            <form onSubmit={handleSubmit} className="space-y-6" method="POST" action="/auth/login/">
               {/* Email Input */}
               <div>
                 <label
@@ -44,7 +132,9 @@ const Login = () => {
                 </label>
                 <input
                   type="email"
-                  name="login"
+                  value={email}
+                  onChange={handleChange}
+                  name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-pink-600 focus:border-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
                   placeholder="name@company.com"
@@ -62,6 +152,8 @@ const Login = () => {
                 </label>
                 <input
                   type="password"
+                  value={password}
+                  onChange={handleChange}
                   name="password"
                   id="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-pink-600 focus:border-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-500 dark:focus:border-pink-500"
